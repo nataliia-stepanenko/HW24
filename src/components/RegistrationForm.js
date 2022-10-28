@@ -42,7 +42,7 @@ if (passwordValue !== confirmValue){
     return;
 }
 
-let regexp = /^\w{1,}\@\w{1,}\.\w{1,}$/i;
+let regexp = /^\w{1,}@\w{1,}\.\w{1,}$/i;
 if (!regexp.test(emailValue)){
     setErrorMessage("Please, enter valid email address");
     return;
