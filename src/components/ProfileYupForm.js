@@ -1,7 +1,17 @@
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
-const ProfileForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const schema = yup.object({
+    firstname: yup.string().trim().required("Firstname is required").min(3, "Firstname should consist of minimum 3 symbols"),
+    lastname: yup.string().trim().required("Lastname is required").min(3, "Lastname must consist of minimum 3 symbols"),
+    country: yup.string().required("Please, select your country")
+}).required();
+
+const ProfileYupForm = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
     
     const onSubmit = (data) => {
         console.log(data);
@@ -10,27 +20,15 @@ const ProfileForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <label>
-                Firstname <input type="text" {...register("firstname", {
-                    required: "Firstname is required",
-                    minLength: {
-                        value: 3,
-                        message: "Firstname should consist of minimum 3 symbols"
-                    }
-                })} />
+                Firstname <input type="text" {...register("firstname")} />
                 {errors.firstname && <div className="error">{errors.firstname.message}</div>}
             </label>
             <label>
-                Lastname <input type="text" {...register("lastname", {
-                    required: "Lastname is required",
-                    minLength: {
-                        value: 3,
-                        message: "Lastname must consist of minimum 3 symbols"
-                    }
-                })} />
+                Lastname <input type="text" {...register("lastname")} />
                 {errors.lastname && <div className="error">{errors.lastname.message}</div>}
             </label>
             <label>
-                Country <select {...register("country", { required: "Please, select your country" })}>
+                Country <select {...register("country")}>
                     <option disabled selected value="">Please, select</option>
                     <option value="ua">Ukraine</option>
                     <option value="uk">Great Britain</option>
@@ -44,4 +42,4 @@ const ProfileForm = () => {
     );
 };
 
-export default ProfileForm
+export default ProfileYupForm;

@@ -38,13 +38,13 @@ if (emailValue === "" || passwordValue === "" || confirmValue === "") {
 }
 
 if (passwordValue !== confirmValue){
-    setErrorMessage("The value does not match your password");
+    setErrorMessage("The values does not match ");
     return;
 }
 
 let regexp = /^\w{1,}\@\w{1,}\.\w{1,}$/i;
 if (!regexp.test(emailValue)){
-    setErrorMessage("Please, enter your valid email address");
+    setErrorMessage("Please, enter valid email address");
     return;
 }
 
